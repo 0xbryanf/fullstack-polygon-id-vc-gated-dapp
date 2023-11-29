@@ -7,10 +7,8 @@ const humanReadableAuthReason = "Must be born before this year";
 
 const credentialSubject = {
   birthday: {
-    // users must be born before this year
-    // birthday is less than Jan 1, 2023
-    $lt: 20230101,
-  },
+    $eq: true
+  }
 };
 
 const proofRequest = KYCAgeCredential(credentialSubject);

@@ -125,30 +125,48 @@ async function handleVerification(req, res) {
     mumbaiContractAddress
   );
 
+  console.log("RPC_URL_MUMBAI:", process.env.RPC_URL_MUMBAI)
+
   const resolvers = {
     ["polygon:mumbai"]: ethStateResolver,
   };
 
+  console.log('resolvers', resolvers);
+
   // Locate the directory that contains circuit's verification keys
   const verificationKeyloader = new loaders.FSKeyLoader(keyDIR);
+  console.log('verificationKeyloader', verificationKeyloader)
+
   const sLoader = new loaders.UniversalSchemaLoader("ipfs.io");
+  console.log('sLoader', sLoader)
+
   const verifier = new auth.Verifier(verificationKeyloader, sLoader, resolvers);
+  console.log('verifier', verifier)
 
   try {
     const opts = {
       AcceptedStateTransitionDelay: 5 * 60 * 1000, // up to a 5 minute delay accepted by the Verifier
     };
+    console.log('opts', opts);
+
     authResponse = await verifier.fullVerify(tokenStr, authRequest, opts);
+    console.log('authResponse', authResponse)
+
     const userId = authResponse.from;
-    io.sockets.emit(
+    console.log('userId', userId)
+
+    const ioRes = io.sockets.emit(
       sessionId,
       socketMessage("handleVerification", STATUS.DONE, authResponse)
     );
+    console.log('ioRes', ioRes);
+    
     return res
       .status(200)
       .set("Content-Type", "application/json")
       .send("User " + userId + " succesfully authenticated");
   } catch (error) {
+    console.error(error);
     console.log(
       "Error handling verification: Double check the value of your RPC_URL_MUMBAI in the .env file. Are you using a valid api key for Polygon Mumbai from your RPC provider? Visit https://alchemy.com/?r=zU2MTQwNTU5Mzc2M and create a new app with Polygon Mumbai"
     );

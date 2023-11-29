@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import {
   Modal,
@@ -68,6 +69,7 @@ function PolygonIDVerifier({
     if (sessionId) {
       fetchQrCode().then(setQrCodeData).catch(console.error);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId]);
 
   // socket event side effects
@@ -93,6 +95,7 @@ function PolygonIDVerifier({
         }
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketEvents]);
 
   // callback, send verification result back to app

@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-no-target-blank */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { createPublicClient, http } from "viem";
@@ -141,10 +144,7 @@ function VcGatedDapp() {
                 <ul>
                   <li>
                     Currently using a{" "}
-                    <a
-                      href="https://viem.sh/docs/clients/public.html"
-                      target="_blank"
-                    >
+                    <a href="https://viem.sh/docs/clients/public.html" target="_blank">
                       public client
                     </a>{" "}
                     with Chain: {publicClient?.chain?.name} and Chain ID:{" "}
